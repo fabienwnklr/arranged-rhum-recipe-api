@@ -12,23 +12,26 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "preparation": {
-      "type": "text",
-      "required": true,
-      "unique": false
-    },
-    "advice": {
-      "type": "text"
-    },
     "name": {
       "type": "string",
       "required": true,
       "unique": true
     },
     "ingredients": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::ingredient.ingredient"
+      "type": "blocks"
+    },
+    "preparation": {
+      "type": "blocks"
+    },
+    "illustration": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
     }
   }
 }

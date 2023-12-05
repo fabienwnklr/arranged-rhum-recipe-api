@@ -705,6 +705,12 @@ export interface ApiIngredientIngredient extends Schema.CollectionType {
       'oneToOne',
       'api::ingredient-type.ingredient-type'
     >;
+    quantity: Attribute.Decimal &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -771,14 +777,10 @@ export interface ApiRecipeRecipe extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    preparation: Attribute.Text & Attribute.Required;
-    advice: Attribute.Text;
     name: Attribute.String & Attribute.Required & Attribute.Unique;
-    ingredients: Attribute.Relation<
-      'api::recipe.recipe',
-      'oneToMany',
-      'api::ingredient.ingredient'
-    >;
+    ingredients: Attribute.Blocks;
+    preparation: Attribute.Blocks;
+    illustration: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -793,6 +795,51 @@ export interface ApiRecipeRecipe extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTestTest extends Schema.CollectionType {
+  collectionName: 'tests';
+  info: {
+    singularName: 'test';
+    pluralName: 'tests';
+    displayName: 'test';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiUnitUnit extends Schema.CollectionType {
+  collectionName: 'units';
+  info: {
+    singularName: 'unit';
+    pluralName: 'units';
+    displayName: 'unit';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    symbol: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::unit.unit', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::unit.unit', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -816,6 +863,8 @@ declare module '@strapi/types' {
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::ingredient-type.ingredient-type': ApiIngredientTypeIngredientType;
       'api::recipe.recipe': ApiRecipeRecipe;
+      'api::test.test': ApiTestTest;
+      'api::unit.unit': ApiUnitUnit;
     }
   }
 }
