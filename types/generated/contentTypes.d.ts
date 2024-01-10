@@ -705,17 +705,6 @@ export interface ApiIngredientIngredient extends Schema.CollectionType {
       'oneToOne',
       'api::ingredient-type.ingredient-type'
     >;
-    quantity: Attribute.Decimal &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    unit: Attribute.Relation<
-      'api::ingredient.ingredient',
-      'oneToOne',
-      'api::unit.unit'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
